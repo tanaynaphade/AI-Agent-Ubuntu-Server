@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  ubuntu-ai-agent:
+    build: .
+    container_name: ubuntu-ai-agent
+    hostname: ubuntu-ai-agent
+    privileged: true  # Required for some system operations
+    volumes:
+      - ./workspace:/home/agent/workspace
+      - ./logs:/opt/agent/logs
+      - /var/run/docker.sock:/var/run/docker.sock  # Optional: Docker in Docker
+    ports:
+      - "8080:8080"  # Web interface (if implemented)
+    environment:
+      - AGENT_MODE=interactive
+      - PYTHONPATH=/opt/agent
+      - TERM=xterm-256color
+      - GEMINI_API_KEY=GEMINI_API_KEY  # Set your environment variable here
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    
+    # Security settings
+    security_opt:
+      - seccomp:unconfined
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+
