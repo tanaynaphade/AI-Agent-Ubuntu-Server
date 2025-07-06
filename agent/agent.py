@@ -12,7 +12,7 @@ if not API_KEY:
 
 # Instantiate client (Gemini Developer API)
 client = genai.Client(api_key=API_KEY, http_options=HttpOptions(api_version="v1alpha"))
-MODEL_NAME = "gemini-2.5-pro"  # adjust as needed
+MODEL_NAME = "gemini-2.5-flash"  # adjust as needed
 
 import subprocess
 
